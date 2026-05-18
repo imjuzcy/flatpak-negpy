@@ -50,7 +50,9 @@ modules:
     build-commands:
       - mkdir -p /app/bin
       - mv uv-x86_64-unknown-linux-gnu/* -t /app/bin/
-      - make build
+      - echo "Building NegPy..."
+      - rm -rf dist/
+      - uv run --offline python build.py
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
       - install -Dm644 media/icons/icon.svg /app/share/icons/hicolor/scalable/apps/com.marcinz606.NegPy.svg
