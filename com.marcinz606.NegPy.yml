@@ -50,9 +50,10 @@ modules:
     build-commands:
       - mkdir -p /app/bin
       - mv uv-x86_64-unknown-linux-gnu/* -t /app/bin/
+      - rmdir uv-x86_64-unknown-linux-gnu
       - mkdir -p /app/opt/negpy
       - ls -lah
-      - mv * -t /app/opt/negpy/
+      - cp -r * -t /app/opt/negpy/
       - cd /app/opt/negpy/
       - ls -lah
       - export UV_CACHE_DIR=$(pwd)/$UV_CACHE_DIR
