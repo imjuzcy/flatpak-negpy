@@ -43,6 +43,8 @@ cleanup:
 modules:
   - name: NegPy
     buildsystem: simple
+    build-options:
+      append-path: /home/runner/.local/bin
     build-commands:
       - make install
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
