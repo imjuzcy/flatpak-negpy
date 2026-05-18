@@ -1,7 +1,7 @@
 id: com.marcinz606.NegPy
-runtime: org.gnome.Platform
-runtime-version: '50'
-sdk: org.gnome.Sdk
+runtime: org.kde.Platform
+runtime-version: '6.10'
+sdk: org.kde.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
   - org.freedesktop.Sdk.Extension.llvm21
@@ -68,5 +68,6 @@ modules:
       - type: archive
         url: https://releases.astral.sh/github/uv/releases/download/0.11.14/uv-x86_64-unknown-linux-gnu.tar.gz
         sha256: f3b623eb0e6141a7053d571d59a0bdc341e0f238ea8f5f0b4815ddbec9a2a296
+        strip-components: 0
       - type: dir
         path: uv-cache
