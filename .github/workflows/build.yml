@@ -1,0 +1,45 @@
+name: Build and Deploy Flatpak
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+    tags: [ '*' ]
+    paths-ignore:
+      - '.github/**'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Flatpak
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder
+          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Build Flatpak
+        run: >
+          flatpak-builder --force-clean --sandbox --user
+          --install-deps-from=flathub --repo=./repo --install
+          build com.marcinz606.NegPy.yml
+
+      - name: Build Flatpak bundle
+        run: |
+          mkdir -p release
+          flatpak build-bundle -vv ./repo ./release/com.marcinz606.NegPy.flatpak com.marcinz606.NegPy
+
+      - name: Upload Flatpak bundle as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: com.marcinz606.NegPy.flatpak
+          path: release/com.marcinz606.NegPy.flatpak
