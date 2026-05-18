@@ -44,7 +44,7 @@ modules:
   - name: NegPy
     buildsystem: simple
     build-options:
-     append-path: /tmp/bin
+      append-path: /tmp/bin
       env:
         UV_CACHE_DIR: $GITHUB_WORKSPACE/uv-cache
         UV_OFFLINE: 1
