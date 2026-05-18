@@ -44,13 +44,12 @@ modules:
   - name: NegPy
     buildsystem: simple
     build-options:
-      append-path: /tmp/bin
       env:
         UV_CACHE_DIR: $GITHUB_WORKSPACE/uv-cache
         UV_OFFLINE: 1
     build-commands:
-      - mkdir -p /tmp/bin
-      - mv uv-x86_64-unknown-linux-gnu/* -t /tmp/bin/
+      - mkdir -p /app/bin
+      - mv uv-x86_64-unknown-linux-gnu/* -t /app/bin/
       - make build
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
