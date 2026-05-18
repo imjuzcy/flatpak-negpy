@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.marcinz606.NegPy</id>
+  
+  <name>NegPy</name>
+  <summary>Tool for processing film negatives</summary>
+  
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  
+  <developer id="com.github.marcinz606">
+    <name>Marcin Zawalski</name>
+  </developer>
+  <!-- Legacy tag for older AppStream versions -->
+  <developer_name>Marcin Zawalski</developer_name>
+  
+  <description>
+    <p>
+      NegPy is an open-source desktop tool for processing film negatives. It is made specifically for film scans and goes beyond simple inversion by simulating how film and photographic paper work, while adding lab-scanner-style conveniences for RAW negative conversion, slide film, batch workflows, cleanup, and print-ready export.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>No Camera Profiles: It doesn't use camera profiles or ask you to color-pick the border. It uses math to neutralize the orange mask based on channel sensitometry.</li>
+      <li>Positive/Slide Support: A dedicated E-6 mode for processing slide film with optional normalization to save expired or faded film.</li>
+      <li>Film Physics: It models the H&amp;D Characteristic Curve of photographic material using a Logistic Sigmoid function instead of doing simple linear inversion.</li>
+      <li>Batch Normalization: Perform bounds analysis for all loaded files and apply averaged settings to all.</li>
+      <li>GPU Acceleration: Real-time processing and export rendering using Vulkan/Metal.</li>
+      <li>Dust Removal: Automatic and manual healing tools with grain synthesis to keep scans clean without looking plastic.</li>
+      <li>Non-destructive: Original files are never touched; edits are stored in a local SQLite database keyed by file hash.</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">com.marcinz606.NegPy.desktop</launchable>
+
+  <url type="homepage">https://github.com/marcinz606/NegPy</url>
+  <url type="bugtracker">https://github.com/marcinz606/NegPy/issues</url>
+  <url type="vcs-browser">https://github.com/marcinz606/NegPy</url>
+  <url type="donation">https://ko-fi.com/marcinzawalski</url>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/marcinz606/NegPy/main/docs/media/0210.png</image>
+    </screenshot>
+  </screenshots>
+
+  <content_rating type="oars-1.1" />
+
+  <releases>
+    <release version="0.21.0" date="2026-05-18" />
+  </releases>
+</component>

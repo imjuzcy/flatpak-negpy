@@ -1,0 +1,60 @@
+id: com.marcinz606.NegPy
+runtime: org.gnome.Platform
+runtime-version: '50'
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  - org.freedesktop.Sdk.Extension.llvm21
+  - org.freedesktop.Sdk.Extension.openjdk25
+command: NegPy
+add-extensions:
+  org.freedesktop.Platform.VAAPI.Intel:
+    directory: lib/intel-vaapi-driver
+    version: '25.08'
+    autodelete: false
+    no-autodownload: true
+  org.freedesktop.Platform.GL:
+    directory: lib/GL
+    version: '25.08'
+    versions: 25.08;1.4
+    subdirectories: true
+    no-autodownload: true
+    autodelete: false
+    add-ld-path: lib
+    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;vulkan/explicit_layer.d;vulkan/implicit_layer.d
+    download-if: active-gl-driver
+    enable-if: active-gl-driver
+finish-args:
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --socket=system-bus
+  - --share=network
+  - --share=ipc
+  - --device=all
+  - --talk-name=org.freedesktop.ScreenSaver
+cleanup:
+  - /share/aclocal
+  - /share/doc
+  - /share/gtk-doc
+  - /share/info
+  - /share/man
+  - /share/pkgconfig
+modules:
+  - name: NegPy
+    buildsystem: simple
+    build-commands:
+      - make install
+      - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
+      - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
+      - install -Dm644 media/icons/icon.svg /app/share/icons/hicolor/scalable/apps/com.marcinz606.NegPy.svg
+    sources:
+      - type: git
+        url: https://github.com/marcinz606/NegPy.git
+        tag: 0.21.0
+        commit: 8d14d2e1afc3fc5b741bd262791ca08ba0c0ac00
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
+      - type: dir
+        path: ./extra/
