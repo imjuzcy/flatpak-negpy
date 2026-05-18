@@ -52,6 +52,11 @@ modules:
         UV_CACHE_DIR: $GITHUB_WORKSPACE/uv-cache
         UV_OFFLINE: 1
     build-commands:
+      - env
+      - uv cache dir
+      - echo $UV_CACHE_DIR
+      - export UV_CACHE_DIR=$GITHUB_WORKSPACE/uv-cache
+      - ls $GITHUB_WORKSPACE/uv-cache
       - mkdir -p /app/bin
       - mv uv-x86_64-unknown-linux-gnu/* -t /app/bin/
       - uv sync --offline
