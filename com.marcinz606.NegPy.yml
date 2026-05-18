@@ -44,11 +44,13 @@ modules:
   - name: NegPy
     buildsystem: simple
     build-options:
+     append-path: /tmp/bin
       env:
         UV_CACHE_DIR=$GITHUB_WORKSPACE/uv-cache
         UV_OFFLINE=1
     build-commands:
-      - sh ./install-uv.sh
+      - mkdir -p /tmp/bin
+      - mv uv-x86_64-unknown-linux-gnu/* /tmp/bin
       - make build
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
@@ -63,9 +65,8 @@ modules:
           tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
       - type: dir
         path: ./extra/
-      - type: file
-        url: https://astral.sh/uv/install.sh
-        dest-filename: install-uv.sh
-        sha256: 14b6b88d74b9300d906d9754118afb4d4151e78ad294f026047b7227f5611760
+      - type: archive
+        url: https://releases.astral.sh/github/uv/releases/download/0.11.14/uv-x86_64-unknown-linux-gnu.tar.gz
+        sha256: f3b623eb0e6141a7053d571d59a0bdc341e0f238ea8f5f0b4815ddbec9a2a296
       - type: dir
         path: uv-cache
