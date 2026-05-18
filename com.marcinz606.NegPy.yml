@@ -46,6 +46,7 @@ modules:
     build-options:
       append-path: /home/runner/.local/bin
     build-commands:
+      - ./install-uv.sh
       - make install
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
@@ -60,3 +61,7 @@ modules:
           tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
       - type: dir
         path: ./extra/
+      - type: file
+        url: https://astral.sh/uv/install.sh
+        dest-filename: ./install-uv.sh
+        sha256: 14b6b88d74b9300d906d9754118afb4d4151e78ad294f026047b7227f5611760
