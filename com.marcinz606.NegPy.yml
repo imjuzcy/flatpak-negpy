@@ -4,10 +4,6 @@ runtime-version: '6.10'
 sdk: org.kde.Sdk
 base: io.qt.PySide.BaseApp
 base-version: '6.10'
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.rust-stable
-  - org.freedesktop.Sdk.Extension.llvm21
-  - org.freedesktop.Sdk.Extension.openjdk25
 command: make run
 add-extensions:
   org.freedesktop.Platform.VAAPI.Intel:
@@ -57,9 +53,9 @@ modules:
       - env
       - uv cache dir
       - echo $UV_CACHE_DIR
-      - find -type d -name uv-cache
-      - export UV_CACHE_DIR=$GITHUB_WORKSPACE/uv-cache
-      - ls $GITHUB_WORKSPACE/uv-cache
+      - find / -type d -name uv-cache
+      - export UV_CACHE_DIR=$(find / -type d -name uv-cache)
+      - ls $UV_CACHE_DIR
       - uv sync --offline
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
