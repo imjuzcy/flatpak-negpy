@@ -32,15 +32,47 @@ finish-args:
   - --device=all
   - --talk-name=org.freedesktop.ScreenSaver
 cleanup:
+  - /include
+  - /lib/pkgconfig
   - /share/aclocal
   - /share/doc
   - /share/gtk-doc
   - /share/info
   - /share/man
   - /share/pkgconfig
+  - '*.a'
+  - '*.la'
 cleanup-commands:
   - /app/cleanup-BaseApp.sh
 modules:
+  - name: libusb1
+    sources:
+    - type: archive
+      url: https://github.com/libusb/libusb/releases/download/v1.0.29/libusb-1.0.29.tar.bz2
+      sha256: 5977fc950f8d1395ccea9bd48c06b3f808fd3c2c961b44b0c2e6e29fc3a70a85
+      x-checker-data:
+        type: anitya
+        project-id: 1749
+        stable-only: true
+        url-template: https://github.com/libusb/libusb/releases/download/v$version/libusb-$version.tar.bz2
+  - name: sane
+    buildsystem: autotools
+    config-opts:
+    - "--with-usb"
+    - "--with-v4l"
+    - "--with-gphoto2"
+    - "--enable-pthread"
+    - "--enable-pnm-backend"
+    - "--enable-pthread"
+    - "--enable-avahi"
+    sources:
+    - type: git
+      url: https://gitlab.com/sane-project/backends
+      tag: 1.4.0
+      x-checker-data:
+        type: git
+        tag-pattern: "^([\\d.]+)$"
+      commit: c7e4b5e35e3d614d2b1181d760a717bfc395a203
   - name: NegPy
     buildsystem: simple
     build-options:
