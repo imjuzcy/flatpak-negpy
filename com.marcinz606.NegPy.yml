@@ -46,7 +46,7 @@ modules:
     build-options:
       env:
         UV_CACHE_DIR: uv-cache
-        UV_OFFLINE: 1
+        UV_OFFLINE: "1"
     build-commands:
       - mkdir -p /app/bin
       - mv uv-x86_64-unknown-linux-gnu/* -t /app/bin/
