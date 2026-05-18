@@ -4,7 +4,7 @@ runtime-version: '6.10'
 sdk: org.kde.Sdk
 base: io.qt.PySide.BaseApp
 base-version: '6.10'
-command: make run
+command: negpy-wrapper
 add-extensions:
   org.freedesktop.Platform.VAAPI.Intel:
     directory: lib/intel-vaapi-driver
@@ -50,13 +50,22 @@ modules:
     build-commands:
       - mkdir -p /app/bin
       - mv uv-x86_64-unknown-linux-gnu/* -t /app/bin/
+      - mkdir -p /app/opt/negpy
+      - mv * -t /app/opt/negpy/
+      - cd /app/opt/negpy/
       - export UV_CACHE_DIR=$(pwd)/$UV_CACHE_DIR
-      - ls $UV_CACHE_DIR
       - uv sync --offline
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
       - install -Dm644 media/icons/icon.svg /app/share/icons/hicolor/scalable/apps/com.marcinz606.NegPy.svg
       - sed -i 's/Icon=icon/Icon=com.marcinz606.NegPy/g' /app/share/applications/com.marcinz606.NegPy.desktop
+      - |
+        cat > /app/bin/negpy-wrapper << EOF
+        #!/bin/bash
+        cd /app/opt/negpy
+        make run
+        EOF
+      - chmod +x /app/bin/negpy-wrapper
     sources:
       - type: git
         url: https://github.com/marcinz606/NegPy.git
