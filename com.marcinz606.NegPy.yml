@@ -56,6 +56,7 @@ modules:
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
       - install -Dm644 media/icons/icon.svg /app/share/icons/hicolor/scalable/apps/com.marcinz606.NegPy.svg
+      - sed -i 's/Icon=icon/Icon=com.marcinz606.NegPy/g' /app/share/applications/com.marcinz606.NegPy.desktop
     sources:
       - type: git
         url: https://github.com/marcinz606/NegPy.git
