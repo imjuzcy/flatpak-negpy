@@ -54,7 +54,7 @@ modules:
       - uv cache dir
       - echo $UV_CACHE_DIR
       - find / -type d -name uv-cache
-      - export UV_CACHE_DIR=$(find / -type d -name uv-cache)
+      - export UV_CACHE_DIR=$(pwd)/$UV_CACHE_DIR
       - ls $UV_CACHE_DIR
       - uv sync --offline
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
