@@ -43,8 +43,6 @@ cleanup:
 modules:
   - name: NegPy
     buildsystem: simple
-    build-options:
-      append-path: /home/runner/.local/bin
     build-commands:
       - ./install-uv.sh
       - make install
@@ -63,5 +61,5 @@ modules:
         path: ./extra/
       - type: file
         url: https://astral.sh/uv/install.sh
-        dest-filename: ./install-uv.sh
+        dest-filename: install-uv.sh
         sha256: 14b6b88d74b9300d906d9754118afb4d4151e78ad294f026047b7227f5611760
