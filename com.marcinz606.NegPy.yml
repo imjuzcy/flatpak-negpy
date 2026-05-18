@@ -46,8 +46,8 @@ modules:
     build-options:
      append-path: /tmp/bin
       env:
-        UV_CACHE_DIR=$GITHUB_WORKSPACE/uv-cache
-        UV_OFFLINE=1
+        UV_CACHE_DIR: $GITHUB_WORKSPACE/uv-cache
+        UV_OFFLINE: 1
     build-commands:
       - mkdir -p /tmp/bin
       - mv uv-x86_64-unknown-linux-gnu/* /tmp/bin
