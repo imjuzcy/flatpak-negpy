@@ -35,7 +35,8 @@ jobs:
           git clone https://github.com/marcinz606/NegPy /tmp/NegPy.git
           cd /tmp/NegPy.git
           uv sync
-          mv $(uv cache dir) $GITHUB_WORKSPACE/uv-cache
+          mkdir -p $GITHUB_WORKSPACE/uv-cache
+          mv $(uv cache dir) $GITHUB_WORKSPACE/uv-cache/uv-cache
 
       - name: Build Flatpak
         run: >

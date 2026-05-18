@@ -49,7 +49,7 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        UV_CACHE_DIR: $GITHUB_WORKSPACE/uv-cache
+        UV_CACHE_DIR: uv-cache
         UV_OFFLINE: 1
     build-commands:
       - mkdir -p /app/bin
@@ -79,4 +79,4 @@ modules:
         sha256: f3b623eb0e6141a7053d571d59a0bdc341e0f238ea8f5f0b4815ddbec9a2a296
         strip-components: 0
       - type: dir
-        path: uv-cache
+        path: ./uv-cache/
