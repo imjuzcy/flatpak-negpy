@@ -43,9 +43,13 @@ cleanup:
 modules:
   - name: NegPy
     buildsystem: simple
+    build-options:
+      env:
+        UV_CACHE_DIR=$GITHUB_WORKSPACE/uv-cache
+        UV_OFFLINE=1
     build-commands:
       - sh ./install-uv.sh
-      - make install
+      - make build
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
       - install -Dm644 media/icons/icon.svg /app/share/icons/hicolor/scalable/apps/com.marcinz606.NegPy.svg
@@ -63,3 +67,5 @@ modules:
         url: https://astral.sh/uv/install.sh
         dest-filename: install-uv.sh
         sha256: 14b6b88d74b9300d906d9754118afb4d4151e78ad294f026047b7227f5611760
+      - type: dir
+        path: uv-cache

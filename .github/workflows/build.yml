@@ -27,6 +27,16 @@ jobs:
           sudo apt-get install -y flatpak flatpak-builder curl
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Prepare offline files
+        run: |
+          git clone https://github.com/marcinz606/NegPy /tmp/NegPy.git
+          cd /tmp/NegPy.git
+          uv sync
+          mv $(uv cache dir) $GITHUB_WORKSPACE/uv-cache
+
       - name: Build Flatpak
         run: >
           flatpak-builder --force-clean --sandbox --user
