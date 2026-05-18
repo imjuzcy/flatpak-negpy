@@ -45,28 +45,26 @@ modules:
     buildsystem: simple
     build-options:
       env:
-        UV_CACHE_DIR: uv-cache
+        UV_CACHE_DIR: "/app/opt/negpy/uv-cache"
         UV_OFFLINE: "1"
     build-commands:
       - mkdir -p /app/bin
       - mv uv-x86_64-unknown-linux-gnu/* -t /app/bin/
       - rmdir uv-x86_64-unknown-linux-gnu
       - mkdir -p /app/opt/negpy
-      - ls -lah
       - cp -r * -t /app/opt/negpy/
       - cd /app/opt/negpy/
-      - ls -lah
-      - export UV_CACHE_DIR=$(pwd)/$UV_CACHE_DIR
       - uv sync --offline
       - install -Dm644 negpy.desktop /app/share/applications/com.marcinz606.NegPy.desktop
       - install -Dm644 com.marcinz606.NegPy.metainfo.xml /app/share/metainfo/com.marcinz606.NegPy.metainfo.xml
       - install -Dm644 media/icons/icon.svg /app/share/icons/hicolor/scalable/apps/com.marcinz606.NegPy.svg
       - sed -i 's/Icon=icon/Icon=com.marcinz606.NegPy/g' /app/share/applications/com.marcinz606.NegPy.desktop
+      - sed -i 's/Exec=NegPy/Exec=negpy-wrapper/g' /app/share/applications/com.marcinz606.NegPy.desktop
       - |
         cat > /app/bin/negpy-wrapper << EOF
         #!/bin/bash
         cd /app/opt/negpy
-        make run
+        uv python desktop.py "$@"
         EOF
       - chmod +x /app/bin/negpy-wrapper
     sources:
