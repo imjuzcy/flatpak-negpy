@@ -50,10 +50,6 @@ modules:
     build-commands:
       - mkdir -p /app/bin
       - mv uv-x86_64-unknown-linux-gnu/* -t /app/bin/
-      - env
-      - uv cache dir
-      - echo $UV_CACHE_DIR
-      - find / -type d -name uv-cache
       - export UV_CACHE_DIR=$(pwd)/$UV_CACHE_DIR
       - ls $UV_CACHE_DIR
       - uv sync --offline
