@@ -30,10 +30,11 @@ jobs:
       - name: Clone external repositories
         run: |
           git clone https://github.com/flatpak/flatpak-builder-tools.git /tmp/flatpak-builder-tools
-          git come https://github.com/marcinz606/NegPy.git /tmp/NegPy
+          git clone https://github.com/marcinz606/NegPy.git /tmp/NegPy
       
       - name: Prepare Python files for offline use
         run: |
+          pip install --user requirements-parser
           /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --runtime org.kde.Sdk//6.10 --pyproject-file /tmp/NegPy/pyproject.toml -o $$GITHUB_WORKSPACE/pip-generated.yml --yaml --cleanup all
 
       - name: Build Flatpak
