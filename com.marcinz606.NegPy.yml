@@ -73,12 +73,9 @@ modules:
         type: git
         tag-pattern: "^([\\d.]+)$"
       commit: c7e4b5e35e3d614d2b1181d760a717bfc395a203
+  - pip-generated.yml
   - name: NegPy
     buildsystem: simple
-    build-options:
-      env:
-        UV_CACHE_DIR: "/app/opt/negpy/uv-cache"
-        UV_OFFLINE: "1"
     build-commands:
       - mkdir -p /app/lib/intel-vaapi-driver
       - mkdir -p /app/lib/GL
@@ -98,7 +95,7 @@ modules:
         cat > /app/bin/negpy-wrapper << EOF
         #!/bin/bash
         cd /app/opt/negpy
-        uv python desktop.py "$@"
+        exec python3 desktop.py "$@"
         EOF
       - chmod +x /app/bin/negpy-wrapper
     sources:
@@ -111,9 +108,3 @@ modules:
           tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
       - type: dir
         path: ./extra/
-      - type: archive
-        url: https://releases.astral.sh/github/uv/releases/download/0.11.14/uv-x86_64-unknown-linux-gnu.tar.gz
-        sha256: f3b623eb0e6141a7053d571d59a0bdc341e0f238ea8f5f0b4815ddbec9a2a296
-        strip-components: 0
-      - type: dir
-        path: ./uv-cache/

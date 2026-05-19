@@ -27,16 +27,14 @@ jobs:
           sudo apt-get install -y flatpak flatpak-builder curl
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
-      - name: Install uv
-        run: curl -LsSf https://astral.sh/uv/install.sh | sh
-
-      - name: Prepare offline files
+      - name: Clone external repositories
         run: |
-          git clone https://github.com/marcinz606/NegPy /tmp/NegPy.git
-          cd /tmp/NegPy.git
-          uv sync
-          mkdir -p $GITHUB_WORKSPACE/uv-cache
-          mv $(uv cache dir) $GITHUB_WORKSPACE/uv-cache/uv-cache
+          git clone https://github.com/flatpak/flatpak-builder-tools.git /tmp/flatpak-builder-tools
+          git come https://github.com/marcinz606/NegPy.git /tmp/NegPy
+      
+      - name: Prepare Python files for offline use
+        run: |
+          /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --runtime org.kde.Sdk//6.10 --pyproject-file /tmp/NegPy/pyproject.toml -o $$GITHUB_WORKSPACE/pip-generated.yml --yaml --cleanup all
 
       - name: Build Flatpak
         run: >
