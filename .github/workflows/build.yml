@@ -6,8 +6,8 @@ on:
       - main
       - dev
     tags: [ '*' ]
-    paths-ignore:
-      - '.github/**'
+    # paths-ignore:
+    #   - '.github/**'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -36,8 +36,7 @@ jobs:
       - name: Prepare Python files for offline use
         run: |
           pip install --user requirements-parser
-          /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --pyproject-file /tmp/NegPy/pyproject.toml -o $GITHUB_WORKSPACE/pip-generated.yml --yaml --cleanup all
-          ls $GITHUB_WORKSPACE/pip-generated.yml
+          /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --runtime com.riverbankcomputing.PyQt.BaseApp//6.10 --pyproject-file /tmp/NegPy/pyproject.toml -o $GITHUB_WORKSPACE/pip-generated.yml --yaml --cleanup all
 
       - name: Build Flatpak
         run: >
