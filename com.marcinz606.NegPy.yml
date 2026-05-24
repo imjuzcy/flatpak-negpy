@@ -102,6 +102,16 @@ modules:
         sha256: 95b30ddfb717250edb492926c92b5221f7ef3fbcc2b07579bcd4a27da21d0173
     cleanup:
       - '*'
+  - name: libdeflate
+    buildsystem: meson
+    config-opts:
+      - -Dlibdeflate_build_static=disabled
+      - -Dbuild_examples=disabled
+      - -Dbuild_tests=disabled
+    sources:
+      - type: archive
+        url: https://github.com/ebiggers/libdeflate/archive/refs/tags/v1.14.tar.gz
+        sha256: 3eab7e2e160e228d6fe59d0898f63e186c565aa37ac25883ef110b9cd2ba7ec6
   - pip-generated.yaml
   - name: NegPy
     buildsystem: simple
