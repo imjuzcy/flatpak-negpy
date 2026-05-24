@@ -105,6 +105,7 @@ modules:
   - name: libdeflate
     buildsystem: cmake
     config-opts:
+      - -DBUILD_SHARED_LIBS=ON
       - -Dbuild_examples=disabled
       - -Dbuild_tests=disabled
     sources:
@@ -115,6 +116,10 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^(v[\d]+\.[\d]+)$
+  - name: debug-deflate
+    buildsystem: simple
+    build-commands:
+      - find /app -name 'libdeflate*' -o -name 'libdeflate.pc'
   - pip-generated.yaml
   - name: NegPy
     buildsystem: simple
