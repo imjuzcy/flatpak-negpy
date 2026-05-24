@@ -71,7 +71,7 @@ modules:
         type: git
         tag-pattern: "^([\\d.]+)$"
       commit: c7e4b5e35e3d614d2b1181d760a717bfc395a203
-  - pip-generated.yml
+  - pip-generated.yaml
   - name: NegPy
     buildsystem: simple
     build-commands:

@@ -36,7 +36,7 @@ jobs:
       - name: Prepare Python files for offline use
         run: |
           pip install --user requirements-parser pyyaml
-          FLATPAK_PIP_GENERATOR_ALLOW_RESTRICTED_MODULES=1 /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --runtime org.kde.Sdk//6.10 --pyproject-file /tmp/NegPy/pyproject.toml --prefer-wheels=opencv-python-headless,pyqt6-charts-qt6,pyqt6-qt6,rawpy -o $GITHUB_WORKSPACE/pip-generated.yml --yaml --cleanup all
+          FLATPAK_PIP_GENERATOR_ALLOW_RESTRICTED_MODULES=1 /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --runtime org.kde.Sdk//6.10 --pyproject-file /tmp/NegPy/pyproject.toml --prefer-wheels=opencv-python-headless,pyqt6-charts-qt6,pyqt6-qt6,rawpy -o $GITHUB_WORKSPACE/pip-generated.yaml --yaml --cleanup all
 
       - name: Build Flatpak
         run: >
