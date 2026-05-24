@@ -103,7 +103,7 @@ modules:
     cleanup:
       - '*'
   - name: libdeflate
-    buildsystem: meson
+    buildsystem: cmake
     config-opts:
       - -Dbuild_examples=disabled
       - -Dbuild_tests=disabled
