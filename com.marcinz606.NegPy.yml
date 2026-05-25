@@ -121,7 +121,7 @@ modules:
     buildsystem: simple
     build-commands:
       - make SHARED=1
-      - make install SHARED=1 DIR_INSTALL=/app/lib/jxrlib
+      - make install SHARED=1 DIR_INSTALL=/app
     cleanup:
       - /bin
     sources:
@@ -135,9 +135,29 @@ modules:
   - name: debug
     buildsystem: simple
     build-commands:
-      - find /app -name '*windowsmediaphoto*'
-      - find /app/lib/jxrlib
-      - mv /app/lib/jxrlib/* -t /app/lib/
+      - find /app -name '*windowsmediaphoto*' || true
+
+  - name: python3-imagecodecs-custom
+    buildsystem: simple
+    build-options:
+    env:
+      PKG_CONFIG_PATH: /app/lib/pkgconfig
+      CFLAGS: -I/app/include
+      CPPFLAGS: -I/app/include
+      LDFLAGS: -L/app/lib
+    build-commands:
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+        --prefix=${FLATPAK_DEST} "imagecodecs==2026.3.6" --no-build-isolation
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/3b/8d/dc18623e5e926ad53c626e128c8baaf4ec42e41029cf0a07381cfef79289/imagecodecs-2026.3.6.tar.gz
+        sha256: 471b8a4d1b3843cbf7179b45f7d7261f0c0b28809efc1ca6c47822477b143b85
+      - type: file
+        url: https://files.pythonhosted.org/packages/d7/9f/b8cef5bffa569759033adda9481211426f12f53299629b410340795c2514/numpy-2.4.4.tar.gz
+        sha256: 2d390634c5182175533585cc89f3608a4682ccb173cc9bb940b2881c8d6f8fa0
+    cleanup:
+      - '*'
+      
   - pip-generated.yaml
   - name: NegPy
     buildsystem: simple
