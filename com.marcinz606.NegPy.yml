@@ -112,11 +112,11 @@ modules:
     sources:
       - type: git
         url: https://github.com/ebiggers/libdeflate.git
-        tag: 1.3.8
-        commit: 50967e1c3154306cf4d69171158e3c2d9ac7044b
+        tag: v1.25
+        commit: c8c56a20f8f621e6a966b716b31f1dedab6a41e3
         x-checker-data:
           type: git
-          tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
+          tag-pattern: ^(v[\d]+\.[\d]+)$
   - name: debug-deflate
     buildsystem: simple
     build-commands:
@@ -132,12 +132,11 @@ modules:
     sources:
       - type: git
         url: https://github.com/mircomir/jxrlib.git
-        tag: v1.25
-        commit: c8c56a20f8f621e6a966b716b31f1dedab6a41e3
+        tag: 1.3.8
+        commit: 50967e1c3154306cf4d69171158e3c2d9ac7044b
         x-checker-data:
           type: git
-          tag-pattern: ^(v[\d]+\.[\d]+)$
-
+          tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
   - pip-generated.yaml
   - name: NegPy
     buildsystem: simple
