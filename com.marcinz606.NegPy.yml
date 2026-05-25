@@ -2,6 +2,8 @@ id: com.marcinz606.NegPy
 runtime: org.kde.Platform
 runtime-version: '6.10'
 sdk: org.kde.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.llvm21
 base: com.riverbankcomputing.PyQt.BaseApp
 base-version: '6.10'
 command: negpy-wrapper
