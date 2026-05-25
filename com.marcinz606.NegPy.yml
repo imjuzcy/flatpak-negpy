@@ -104,7 +104,17 @@ modules:
   - name: debug
     buildsystem: simple
     build-commands:
-      - find /app -name '*windowsmediaphoto*' || true      
+      - find /app -name '*windowsmediaphoto*' || true
+  - name: lerc
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/Esri/lerc.git
+        tag: v4.1.0
+        x-checker-data:
+            type: git
+            tag-pattern: ^(v[\d]+\.[\d]+\.[\d]+)$
+        commit: fa0ae1b00903cc55e321d5c0165746310092adf8
   - pip-generated-custom.yaml
   - name: NegPy
     buildsystem: simple
