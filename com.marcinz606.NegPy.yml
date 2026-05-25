@@ -108,6 +108,7 @@ modules:
       - -DBUILD_SHARED_LIBS=ON
       - -Dbuild_examples=disabled
       - -Dbuild_tests=disabled
+      - --libdir=lib
     sources:
       - type: git
         url: https://github.com/ebiggers/libdeflate.git
