@@ -120,6 +120,8 @@ modules:
       - '*'
   - name: python3-numba
     buildsystem: simple
+    build-options:
+      prepend-ld-library-path: /usr/lib/sdk/llvm21/lib
     build-commands:
       - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
         --prefix=${FLATPAK_DEST} "numba==0.65.1" --no-build-isolation
