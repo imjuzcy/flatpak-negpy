@@ -120,7 +120,8 @@ modules:
   - name: jxrlib
     buildsystem: simple
     build-commands:
-      - make install SHARED=1
+      - make SHARED=1
+      - make install SHARED=1 DIR_INSTALL=/app
     cleanup:
       - /bin
     sources:
