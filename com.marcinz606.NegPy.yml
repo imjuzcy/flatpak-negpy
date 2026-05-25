@@ -140,11 +140,11 @@ modules:
   - name: python3-imagecodecs-custom
     buildsystem: simple
     build-options:
-    env:
-      PKG_CONFIG_PATH: /app/lib/pkgconfig
-      CFLAGS: -I/app/include
-      CPPFLAGS: -I/app/include
-      LDFLAGS: -L/app/lib
+      env:
+        PKG_CONFIG_PATH: /app/lib/pkgconfig
+        CFLAGS: -I/app/include
+        CPPFLAGS: -I/app/include
+        LDFLAGS: -L/app/lib
     build-commands:
       - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
         --prefix=${FLATPAK_DEST} "imagecodecs==2026.3.6" --no-build-isolation
