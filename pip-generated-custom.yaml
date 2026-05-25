@@ -122,6 +122,11 @@ modules:
     buildsystem: simple
     build-options:
       prepend-ld-library-path: /usr/lib/sdk/llvm21/lib
+      prepend-ld-library-path: /usr/lib/sdk/llvm21/lib
+      env:
+        LLVM_DIR: /usr/lib/sdk/llvm21/lib/cmake/llvm
+        CMAKE_PREFIX_PATH: /usr/lib/sdk/llvm21
+        LLVM_CONFIG: /usr/lib/sdk/llvm21/bin/llvm-config
     build-commands:
       - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
         --prefix=${FLATPAK_DEST} "numba==0.65.1" --no-build-isolation
