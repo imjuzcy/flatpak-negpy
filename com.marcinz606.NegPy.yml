@@ -107,6 +107,9 @@ modules:
       - find /app -name '*windowsmediaphoto*' || true
   - name: lerc
     buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_SHARED_LIBS=ON
+      - -DCMAKE_INSTALL_LIBDIR=lib
     sources:
       - type: git
         url: https://github.com/Esri/lerc.git
