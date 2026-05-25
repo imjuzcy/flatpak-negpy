@@ -75,8 +75,8 @@ modules:
     build-options:
       env:
         PKG_CONFIG_PATH: /app/lib/pkgconfig
-        CFLAGS: -I/app/include -I/app/include/libjxr/image
-        CPPFLAGS: -I/app/include -I/app/include/libjxr/image
+        CFLAGS: -I/app/include -I/app/include/libjxr/common -I/app/include/libjxr/image -I/app/include/libjxr/glue
+        CPPFLAGS: -I/app/include -I/app/include/libjxr/common -I/app/include/libjxr/image -I/app/include/libjxr/glue
         LDFLAGS: -L/app/lib
     build-commands:
       - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
