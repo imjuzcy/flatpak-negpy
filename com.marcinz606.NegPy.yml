@@ -106,7 +106,7 @@ modules:
   - name: debug
     buildsystem: simple
     build-commands:
-      - find /app -name '*windowsmediaphoto*' || true
+      - find / -name 'LLVM.cps' -o -name 'llvm.cps' -o -name 'LLVMConfig.cmake' -o -name 'llvm-config.cmake' || true
   - name: lerc
     buildsystem: cmake-ninja
     config-opts:
