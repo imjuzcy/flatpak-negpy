@@ -121,7 +121,7 @@ modules:
     buildsystem: simple
     build-commands:
       - make SHARED=1
-      - make install SHARED=1 DIR_INSTALL=/app
+      - make install SHARED=1 DIR_INSTALL=/app/lib/jxrlib
     cleanup:
       - /bin
     sources:
@@ -136,6 +136,8 @@ modules:
     buildsystem: simple
     build-commands:
       - find /app -name '*windowsmediaphoto*'
+      - find /app/lib/jxrlib
+      - mv /app/lib/jxrlib/* -t /app/lib/
   - pip-generated.yaml
   - name: NegPy
     buildsystem: simple
