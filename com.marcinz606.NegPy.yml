@@ -117,16 +117,10 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^(v[\d]+\.[\d]+)$
-  - name: debug-deflate
+  - name: jxrlib
     buildsystem: simple
     build-commands:
-      - find /app -name 'libdeflate*' -o -name 'libdeflate.pc'
-  - name: jxrlib
-    buildsystem: cmake-ninja
-    builddir: true
-    build-options:
-    config-opts:
-      - -DJXRLIB_INSTALL_LIB_DIR=lib
+      - make install SHARED=1
     cleanup:
       - /bin
     sources:
@@ -137,6 +131,10 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
+  - name: debug
+    buildsystem: simple
+    build-commands:
+      - find /app -name '*windowsmediaphoto*'
   - pip-generated.yaml
   - name: NegPy
     buildsystem: simple
