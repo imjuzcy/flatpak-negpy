@@ -275,7 +275,14 @@ modules:
         url: https://files.pythonhosted.org/packages/c1/b2/b06d7d89eef452ab50ad3e752604c09ec08c8eaf49484641e566a0e5141d/rendercanvas-2.6.3-py3-none-any.whl
         sha256: c2defd04e3e29dcdf94b794e827045882925677bc48b04084f3b9696fd469018
       - type: file
-        url: https://files.pythonhosted.org/packages/7c/0a/037c776ed096544455d9765ebc28239cab5dfe86a69c10f1b234d8ccb2c6/wgpu-0.31.0.tar.gz
-        sha256: 91c2fd4fb3ffed995646f3151db459bf3f8a2f25ec4604af8fb11765d607a436
+        url: https://files.pythonhosted.org/packages/c5/a0/1657b85700cf5d72ba6595e4451be578755a181ad1d9935e6dcf2d84d1b4/wgpu-0.31.0-py3-none-manylinux_2_28_x86_64.whl
+        sha256: a5cca85fe39e7db67d3c4fcccb137e57e8c4a209b467d1752ba1e7f8b929fd2d
+        only-arches:
+          - x86_64
+      - type: file
+        url: https://files.pythonhosted.org/packages/58/c7/884910bb2a04edf18bd6556ec82a62e31f10f06e336cdc5abea88fc0f7e4/wgpu-0.31.0-py3-none-manylinux_2_28_aarch64.whl
+        sha256: 27222e64527182fb458c5dc96aabcb0f082b11436abb1fe8cfb6b28690e48689
+        only-arches:
+          - aarch64
     cleanup:
       - '*'
