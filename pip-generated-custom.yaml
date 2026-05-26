@@ -166,7 +166,7 @@ modules:
     buildsystem: simple
     build-commands:
       - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-        --prefix=${FLATPAK_DEST} "pyqt6-charts==6.11.0"
+        --prefix=${FLATPAK_DEST} "pyqt6-charts==6.11.0" --no-build-isolation
     sources:
       - type: file
         url: https://files.pythonhosted.org/packages/41/48/5b217d1063d44b4d59dca2814e114ec47b7d5815f26b74c5146adbf1f6a8/pyqt6_charts-6.11.0-cp310-abi3-manylinux_2_34_x86_64.whl
