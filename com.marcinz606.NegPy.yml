@@ -106,7 +106,7 @@ modules:
   - name: debug
     buildsystem: simple
     build-commands:
-      - find / -name 'LLVM.cps' -o -name 'llvm.cps' -o -name 'LLVMConfig.cmake' -o -name 'llvm-config.cmake' || true
+      - find / -name 'LLVM.cps' -o -name 'llvm.cps' -o -name 'LLVMConfig.cmake' -o -name 'llvm-config.cmake' -o -name 'libLLVMX86AsmParser*' -o -iname '*LLVM*' || true
   - name: lerc
     buildsystem: cmake-ninja
     config-opts:
