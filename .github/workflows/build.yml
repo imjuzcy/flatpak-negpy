@@ -37,7 +37,7 @@ jobs:
         run: |
           sed -i 's/requires = \["setuptools/requires = \["meson-python>=0.19.0","setuptools/g' /tmp/NegPy/pyproject.toml
           pip install --user requirements-parser pyyaml
-          FLATPAK_PIP_GENERATOR_ALLOW_RESTRICTED_MODULES=1 /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --runtime org.kde.Sdk//6.10 --pyproject-file /tmp/NegPy/pyproject.toml --prefer-wheels=opencv-python-headless,pyqt6-charts-qt6,pyqt6-qt6,rawpy -o $GITHUB_WORKSPACE/pip-generated.yaml --yaml --cleanup all
+          /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --runtime org.kde.Sdk//6.10 --pyproject-file /tmp/NegPy/pyproject.toml --prefer-wheels=opencv-python-headless,rawpy,llvmlite,numba --ignore-pkg=pyqt6,pyqt6-charts-qt6,pyqt6-qt6,pyqt6-charts -o $GITHUB_WORKSPACE/pip-generated.yaml --yaml --cleanup scripts
 
       - name: Build Flatpak
         run: >
