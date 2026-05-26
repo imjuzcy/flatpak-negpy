@@ -210,11 +210,7 @@ modules:
         sha256: ba3311e1f411dfe9f401faf41569df6a7f0608d453bb73fb39c9a7bb5e1fc8b7
         only-arches:
           - aarch64
-      - *id004
-      - *id005
-      - *id006
-    cleanup:
-      - '*'      - &id003
+      - &id003
         type: file
         url: https://files.pythonhosted.org/packages/8b/47/b25c13eca5bebc6505394d0223e46d7ebf0c57dcac2ed908d7d19b18ab6b/pyqt6-6.11.0.tar.gz
         sha256: 45dd60aa69976de1918b5ced6b4e7b6a25abd2a919ecef5fd5826ecc76718889
