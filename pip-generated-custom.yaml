@@ -23,8 +23,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/1d/0b/da4851b1e2d9c40c9bd74c0abd94510a7d797da9ccde0a90e8953751ed4a/pyproject_metadata-0.11.0-py3-none-any.whl
         sha256: 85bbecca8694e2c00f63b492c96921d6c228454057c88e7c352b2077fcaa4096
-    cleanup:
-      - '*'
   - name: python3-setuptools
     buildsystem: simple
     build-commands:
@@ -34,8 +32,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/94/b8/f1f62a5e3c0ad2ff1d189590bfa4c46b4f3b6e49cef6f26c6ee4e575394d/setuptools-80.10.2-py3-none-any.whl
         sha256: 95b30ddfb717250edb492926c92b5221f7ef3fbcc2b07579bcd4a27da21d0173
-    cleanup:
-      - '*'
   - name: python3-rawpy
     buildsystem: simple
     build-commands:
@@ -56,8 +52,6 @@ modules:
         sha256: 8d1d0a26e79297e95a183a769e0bca3404830797224e168980b04463532084be
         only-arches:
           - aarch64
-    cleanup:
-      - '*'
   - name: python3-tifffile
     buildsystem: simple
     build-commands:
@@ -68,8 +62,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/3f/9f/74f110b4271ded519c7add4341cbabc824de26817ff1c345b3109df9e99c/tifffile-2026.4.11-py3-none-any.whl
         sha256: 9b94ffeddb39e97601af646345e8808f885773de01b299e480ed6d3a41509ec9
-    cleanup:
-      - '*'
   - name: python3-imagecodecs
     buildsystem: simple
     build-options:
@@ -86,8 +78,6 @@ modules:
         url: https://files.pythonhosted.org/packages/3b/8d/dc18623e5e926ad53c626e128c8baaf4ec42e41029cf0a07381cfef79289/imagecodecs-2026.3.6.tar.gz
         sha256: 471b8a4d1b3843cbf7179b45f7d7261f0c0b28809efc1ca6c47822477b143b85
       - *id001
-    cleanup:
-      - '*'
   - name: python3-imageio
     buildsystem: simple
     build-commands:
@@ -102,8 +92,6 @@ modules:
         type: file
         url: https://files.pythonhosted.org/packages/8c/21/c2bcdd5906101a30244eaffc1b6e6ce71a31bd0742a01eb89e660ebfac2d/pillow-12.2.0.tar.gz
         sha256: a830b1a40919539d07806aa58e1b114df53ddd43213d9c8b75847eee6c0182b5
-    cleanup:
-      - '*'
   - name: python3-jinja2
     buildsystem: simple
     build-commands:
@@ -116,8 +104,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/7e/99/7690b6d4034fffd95959cbe0c02de8deb3098cc577c67bb6a24fe5d7caa7/markupsafe-3.0.3.tar.gz
         sha256: 722695808f4b6457b320fdc131280796bdceb04ab50fe1795cd540799ebe1698
-    cleanup:
-      - '*'
   - name: python3-numba
     buildsystem: simple
     build-commands:
@@ -145,8 +131,6 @@ modules:
         only-arches:
           - aarch64
       - *id001
-    cleanup:
-      - '*'
   - name: python3-numpy
     buildsystem: simple
     build-commands:
@@ -154,8 +138,6 @@ modules:
         --prefix=${FLATPAK_DEST} "numpy==2.4.4" --no-build-isolation
     sources:
       - *id001
-    cleanup:
-      - '*'
   - name: python3-opencv-python-headless
     buildsystem: simple
     build-commands:
@@ -173,8 +155,6 @@ modules:
         sha256: 5c8cfc8e87ed452b5cecb9419473ee5560a989859fe1d10d1ce11ae87b09a2cb
         only-arches:
           - aarch64
-    cleanup:
-      - '*'
   - name: python3-pillow
     buildsystem: simple
     build-commands:
@@ -182,8 +162,6 @@ modules:
         --prefix=${FLATPAK_DEST} "pillow==12.2.0" --no-build-isolation
     sources:
       - *id002
-    cleanup:
-      - '*'
   - name: python3-pyqt6-charts
     buildsystem: simple
     build-commands:
@@ -230,8 +208,6 @@ modules:
         type: file
         url: https://files.pythonhosted.org/packages/90/24/a753e1af94b9ae5b2da63d4598457308da3cdbf0838c959381db086ccc86/pyqt6_sip-13.11.1.tar.gz
         sha256: 869c5b48afe38e55b1ee0dd72182b0886e968cc509b98023ff50010b013ce1be
-    cleanup:
-      - '*'
   - name: python3-piexif
     buildsystem: simple
     build-commands:
@@ -241,8 +217,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/2c/d8/6f63147dd73373d051c5eb049ecd841207f898f50a5a1d4378594178f6cf/piexif-1.1.3-py2.py3-none-any.whl
         sha256: 3bc435d171720150b81b15d27e05e54b8abbde7b4242cddd81ef160d283108b6
-    cleanup:
-      - '*'
   - name: python3-qtawesome
     buildsystem: simple
     build-commands:
@@ -256,8 +230,6 @@ modules:
       - type: file
         url: https://files.pythonhosted.org/packages/25/b1/da1d826ccc9258674b26dd0abcbbb1c55cab06e7fbf2697518b67edc79fc/qtawesome-1.4.2-py3-none-any.whl
         sha256: dbf08524428fa2df73918ce362153254cd44f089380576d84bfaad8f40eece45
-    cleanup:
-      - '*'
   - name: python3-wgpu
     buildsystem: simple
     build-commands:
@@ -284,5 +256,3 @@ modules:
         sha256: 27222e64527182fb458c5dc96aabcb0f082b11436abb1fe8cfb6b28690e48689
         only-arches:
           - aarch64
-    cleanup:
-      - '*'
