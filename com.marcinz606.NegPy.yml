@@ -103,10 +103,6 @@ modules:
         x-checker-data:
           type: git
           tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
-  - name: debug
-    buildsystem: simple
-    build-commands:
-      - find / -name 'LLVM.cps' -o -name 'llvm.cps' -o -name 'LLVMConfig.cmake' -o -name 'llvm-config.cmake' -o -name 'libLLVMX86AsmParser*' -o -iname '*LLVM*' || true
   - name: lerc
     buildsystem: cmake-ninja
     config-opts:
@@ -132,9 +128,14 @@ modules:
     cleanup:
       - '*'
   - pip-generated-custom.yaml
+  - name: debug
+    buildsystem: simple
+    build-commands:
+      - find / -name '*numpy*' || true
   - name: NegPy
     buildsystem: simple
     build-commands:
+      - find /app -name '*numpy*' || true
       - mkdir -p /app/lib/intel-vaapi-driver
       - mkdir -p /app/lib/GL
       - mkdir -p /app/bin
