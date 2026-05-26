@@ -191,8 +191,15 @@ modules:
         --prefix=${FLATPAK_DEST} "pyqt6-charts==6.11.0" --no-build-isolation
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/c0/7f/2bd22df06ba836b6a76ec193a8085dab4a666e320326e41bccc7b2695882/pyqt6_charts-6.11.0.tar.gz
-        sha256: 1091cd919806a3ce05d2276729f79be4ecbd0a939500a8899026c3ef5769c650
+        url: https://files.pythonhosted.org/packages/41/48/5b217d1063d44b4d59dca2814e114ec47b7d5815f26b74c5146adbf1f6a8/pyqt6_charts-6.11.0-cp310-abi3-manylinux_2_34_x86_64.whl
+        sha256: 1d65c31b331fbdfbf3a4a015c37ba56bfe5694476b831b22d9c8c29d142312d0
+        only-arches:
+          - x86_64
+      - type: file
+        url: https://files.pythonhosted.org/packages/e3/5a/22cfd4ef799352a922d830b8da773ee3704e0441b8e66a38813b4da2e194/pyqt6_charts-6.11.0-cp310-abi3-manylinux_2_39_aarch64.whl
+        sha256: 36abb31a401121f988a1967b1f63be0b30d4922e4f68070eb008c76722d386b8
+        only-arches:
+          - aarch64
       - type: file
         url: https://files.pythonhosted.org/packages/fc/04/4c180b4c00f053a03d5dab7de49bbc930e71a5db73d35007b417598c3a95/pyqt6_charts_qt6-6.11.1-py3-none-manylinux_2_34_x86_64.whl
         sha256: cae9dac7dd3c420aa47101bb8eba45226d9a9690b4f34573f4a1bbc3808ee7af
@@ -203,7 +210,11 @@ modules:
         sha256: ba3311e1f411dfe9f401faf41569df6a7f0608d453bb73fb39c9a7bb5e1fc8b7
         only-arches:
           - aarch64
-      - &id003
+      - *id004
+      - *id005
+      - *id006
+    cleanup:
+      - '*'      - &id003
         type: file
         url: https://files.pythonhosted.org/packages/8b/47/b25c13eca5bebc6505394d0223e46d7ebf0c57dcac2ed908d7d19b18ab6b/pyqt6-6.11.0.tar.gz
         sha256: 45dd60aa69976de1918b5ced6b4e7b6a25abd2a919ecef5fd5826ecc76718889
