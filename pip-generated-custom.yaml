@@ -162,6 +162,32 @@ modules:
         --prefix=${FLATPAK_DEST} "pillow==12.2.0" --no-build-isolation
     sources:
       - *id002
+  - name: python3-pyqt6-charts
+    buildsystem: simple
+    build-commands:
+      - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+        --prefix=${FLATPAK_DEST} "pyqt6-charts==6.11.0" --no-build-isolation
+    sources:
+      - type: file
+        url: https://files.pythonhosted.org/packages/41/48/5b217d1063d44b4d59dca2814e114ec47b7d5815f26b74c5146adbf1f6a8/pyqt6_charts-6.11.0-cp310-abi3-manylinux_2_34_x86_64.whl
+        sha256: 1d65c31b331fbdfbf3a4a015c37ba56bfe5694476b831b22d9c8c29d142312d0
+        only-arches:
+          - x86_64
+      - type: file
+        url: https://files.pythonhosted.org/packages/e3/5a/22cfd4ef799352a922d830b8da773ee3704e0441b8e66a38813b4da2e194/pyqt6_charts-6.11.0-cp310-abi3-manylinux_2_39_aarch64.whl
+        sha256: 36abb31a401121f988a1967b1f63be0b30d4922e4f68070eb008c76722d386b8
+        only-arches:
+          - aarch64
+      - type: file
+        url: https://files.pythonhosted.org/packages/fc/04/4c180b4c00f053a03d5dab7de49bbc930e71a5db73d35007b417598c3a95/pyqt6_charts_qt6-6.11.1-py3-none-manylinux_2_34_x86_64.whl
+        sha256: cae9dac7dd3c420aa47101bb8eba45226d9a9690b4f34573f4a1bbc3808ee7af
+        only-arches:
+          - x86_64
+      - type: file
+        url: https://files.pythonhosted.org/packages/2f/59/cda29959c190e29cda49f9e823c236fccac1c897e71803e462e3821a4323/pyqt6_charts_qt6-6.11.1-py3-none-manylinux_2_39_aarch64.whl
+        sha256: ba3311e1f411dfe9f401faf41569df6a7f0608d453bb73fb39c9a7bb5e1fc8b7
+        only-arches:
+          - aarch64
   - name: python3-piexif
     buildsystem: simple
     build-commands:
