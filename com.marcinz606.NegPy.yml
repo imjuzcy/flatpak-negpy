@@ -2,8 +2,6 @@ id: com.marcinz606.NegPy
 runtime: org.kde.Platform
 runtime-version: '6.10'
 sdk: org.kde.Sdk
-sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm20
 base: com.riverbankcomputing.PyQt.BaseApp
 base-version: '6.10'
 command: negpy-wrapper
@@ -33,6 +31,8 @@ finish-args:
   - --share=ipc
   - --device=all
   - --talk-name=org.freedesktop.ScreenSaver
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
 cleanup:
   - /include
   - /lib/pkgconfig
@@ -44,6 +44,9 @@ cleanup:
   - /share/pkgconfig
   - '*.a'
   - '*.la'
+build-options:
+  env:
+    - BASEAPP_REMOVE_WEBENGINE=1
 modules:
   - name: libusb1
     sources:
