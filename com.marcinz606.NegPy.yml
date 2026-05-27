@@ -149,10 +149,10 @@ modules:
       - sed -i 's/Icon=icon/Icon=com.marcinz606.NegPy/g' /app/share/applications/com.marcinz606.NegPy.desktop
       - sed -i 's/Exec=NegPy/Exec=negpy-wrapper/g' /app/share/applications/com.marcinz606.NegPy.desktop
       - |
-        cat > /app/bin/negpy-wrapper << EOF
+        cat > /app/bin/negpy-wrapper << 'EOF'
         #!/bin/bash
         cd /app/opt/negpy
-        exec python3 desktop.py "$@"
+        exec python3 desktop.py -platform wayland -platformtheme kde "$@"
         EOF
       - chmod +x /app/bin/negpy-wrapper
     sources:
