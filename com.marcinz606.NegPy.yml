@@ -23,6 +23,7 @@ add-extensions:
     download-if: active-gl-driver
     enable-if: active-gl-driver
 finish-args:
+  - --filesystem=xdg-pictures:ro
   - --persist=Documents/NegPy
   - --socket=fallback-x11
   - --socket=wayland
