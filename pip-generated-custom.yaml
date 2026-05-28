@@ -166,26 +166,26 @@ modules:
     buildsystem: simple
     build-commands:
       - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-        --prefix=${FLATPAK_DEST} "pyqt6-charts==6.11.0" --no-build-isolation
+        --prefix=${FLATPAK_DEST} "pyqt6-charts==6.10.0" --no-build-isolation
     sources:
       - type: file
-        url: https://files.pythonhosted.org/packages/41/48/5b217d1063d44b4d59dca2814e114ec47b7d5815f26b74c5146adbf1f6a8/pyqt6_charts-6.11.0-cp310-abi3-manylinux_2_34_x86_64.whl
-        sha256: 1d65c31b331fbdfbf3a4a015c37ba56bfe5694476b831b22d9c8c29d142312d0
+        url: https://files.pythonhosted.org/packages/25/ec/935631a8c22aa4d9f9996382116e18233e15a626644e2177af0f55452df6/pyqt6_charts-6.10.0-cp39-abi3-manylinux_2_34_x86_64.whl
+        sha256: d4b5f751b46bcc6d799695baabe0998a761ee9ee390f5942da3a5b0125275165
         only-arches:
           - x86_64
       - type: file
-        url: https://files.pythonhosted.org/packages/e3/5a/22cfd4ef799352a922d830b8da773ee3704e0441b8e66a38813b4da2e194/pyqt6_charts-6.11.0-cp310-abi3-manylinux_2_39_aarch64.whl
-        sha256: 36abb31a401121f988a1967b1f63be0b30d4922e4f68070eb008c76722d386b8
+        url: https://files.pythonhosted.org/packages/92/a9/7fff72c4f7e19a05d67f403b0529e7ee996936cab11289bf2d9076541b91/pyqt6_charts-6.10.0-cp39-abi3-manylinux_2_39_aarch64.whl
+        sha256: 605d11f86b9033cb222e066bf5cf6ab3298edb974f2aa736885e490af7421c51
         only-arches:
           - aarch64
       - type: file
-        url: https://files.pythonhosted.org/packages/fc/04/4c180b4c00f053a03d5dab7de49bbc930e71a5db73d35007b417598c3a95/pyqt6_charts_qt6-6.11.1-py3-none-manylinux_2_34_x86_64.whl
-        sha256: cae9dac7dd3c420aa47101bb8eba45226d9a9690b4f34573f4a1bbc3808ee7af
+        url: https://files.pythonhosted.org/packages/aa/cc/120d5dcb2cbb50559fa2b8e75939bf088ac69e8776fbdeb3179fb3e5f2de/pyqt6_charts_qt6-6.10.2-py3-none-manylinux_2_34_x86_64.whl
+        sha256: c5de8ef6478daa14aff3ad382975aff8012b713140b9ae41b9eb681dc1d5560d
         only-arches:
           - x86_64
       - type: file
-        url: https://files.pythonhosted.org/packages/2f/59/cda29959c190e29cda49f9e823c236fccac1c897e71803e462e3821a4323/pyqt6_charts_qt6-6.11.1-py3-none-manylinux_2_39_aarch64.whl
-        sha256: ba3311e1f411dfe9f401faf41569df6a7f0608d453bb73fb39c9a7bb5e1fc8b7
+        url: https://files.pythonhosted.org/packages/f0/0a/9137d185eeb6377b4c4a3488bf4f738ba8c04b3c76e3aa83cf69287a4423/pyqt6_charts_qt6-6.10.2-py3-none-manylinux_2_39_aarch64.whl
+        sha256: c3273882abc1b212ad6f4b1f973ab42eb22a66c334d347a4cc23c1c57aaa4cdd
         only-arches:
           - aarch64
   - name: python3-piexif
