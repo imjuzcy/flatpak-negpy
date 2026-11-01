@@ -38,13 +38,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Check if there are actually updates to NegPy
-          if cmp --silent <(git show HEAD:flatpak.yml | yq '.modules.[] | select(.name =="NegPy") | .sources.[] | select(.type=="git" and (.url | test("marcinz606/NegPy")))') \
-                          <(yq '.modules.[] | select(.name =="NegPy") | .sources.[] | select(.type=="git" and (.url | test("marcinz606/NegPy")))' flatpak.yml); then
+          if cmp --silent <(git show HEAD:flatpak.yml | yq '.modules[] | objects | select(.name=="NegPy") | .sources[] | objects | select(.type=="git" and (.url | test("marcinz606/NegPy")))') \
+                          <(yq '.modules[] | objects | select(.name=="NegPy") | .sources[] | objects | select(.type=="git" and (.url | test("marcinz606/NegPy")))' flatpak.yml); then
             echo "No updates to NegPy found. Exiting."
             exit 0
           fi
 
-          VERSION_TAG=$(yq -r '.modules.[] | select(.name =="NegPy") | .sources.[] | select(.type=="git" and (.url | test("marcinz606/NegPy"))) | .tag' flatpak.yml)
+          VERSION_TAG=$(yq -r '.modules[] | objects | select(.name=="NegPy") | .sources[] | objects | select(.type=="git" and (.url | test("marcinz606/NegPy"))) | .tag' flatpak.yml)
           BRANCH_NAME="negpy-${VERSION_TAG}"
 
           BRANCH_EXISTS=$(git ls-remote --heads origin "$BRANCH_NAME")

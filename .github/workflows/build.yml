@@ -37,7 +37,7 @@ jobs:
       - name: Clone external repositories
         run: |
           git clone https://github.com/flatpak/flatpak-builder-tools.git /tmp/flatpak-builder-tools
-          git clone --branch $(cat flatpak.yml | yq -r '.modules.[] | select(.name=="NegPy").sources.[0].tag') https://github.com/marcinz606/NegPy.git /tmp/NegPy
+          git clone --branch $(cat flatpak.yml | yq -r '.modules[] | objects | select(.name=="NegPy") | .sources[0].tag') https://github.com/marcinz606/NegPy.git /tmp/NegPy
 
       - name: Generate Python modules
         run: python3 tools/flatpak-uv-generator.py /tmp/NegPy/uv.lock -o generated/python3-modules.json
