@@ -1,0 +1,190 @@
+id: com.marcinz606.NegPy
+runtime: org.kde.Platform
+runtime-version: '6.11'
+sdk: org.kde.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: '6.11'
+command: negpy-wrapper
+add-extensions:
+  org.freedesktop.Platform.VAAPI.Intel:
+    directory: lib/intel-vaapi-driver
+    version: '25.08'
+    autodelete: false
+    no-autodownload: true
+  org.freedesktop.Platform.GL:
+    directory: lib/GL
+    version: '25.08'
+    versions: 25.08;1.4
+    subdirectories: true
+    no-autodownload: true
+    autodelete: false
+    add-ld-path: lib
+    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;vulkan/explicit_layer.d;vulkan/implicit_layer.d
+    download-if: active-gl-driver
+    enable-if: active-gl-driver
+finish-args:
+  - --filesystem=xdg-pictures:ro
+  - --persist=Documents/NegPy
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --socket=system-bus
+  - --share=network
+  - --share=ipc
+  - --device=all
+  - --talk-name=org.freedesktop.ScreenSaver
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - /share/aclocal
+  - /share/doc
+  - /share/gtk-doc
+  - /share/info
+  - /share/man
+  - /share/pkgconfig
+  - '*.a'
+  - '*.la'
+build-options:
+  env:
+    BASEAPP_REMOVE_WEBENGINE: '1'
+modules:
+  - name: libusb1
+    config-opts:
+      - --disable-static
+    sources:
+      - type: archive
+        url: https://github.com/libusb/libusb/releases/download/v1.0.30/libusb-1.0.30.tar.bz2
+        sha256: fea36f34f9156400209595e300840767ab1a385ede1dc7ee893015aea9c6dbaf
+        x-checker-data:
+          type: anitya
+          project-id: 1749
+          stable-only: true
+          url-template: https://github.com/libusb/libusb/releases/download/v$version/libusb-$version.tar.bz2
+
+  - name: sane
+    buildsystem: autotools
+    config-opts:
+      - --with-usb
+      - --with-v4l
+      - --with-gphoto2
+      - --enable-pthread
+      - --enable-pnm-backend
+      - --enable-avahi
+    sources:
+      - type: git
+        url: https://gitlab.com/sane-project/backends.git
+        tag: 1.4.0
+        commit: c7e4b5e35e3d614d2b1181d760a717bfc395a203
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d.]+)$
+
+  # libdeflate, jxrlib and lerc are needed to build imagecodecs from source.
+  - name: libdeflate
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_SHARED_LIBS=ON
+      - -DLIBDEFLATE_BUILD_STATIC_LIB=OFF
+      - -DLIBDEFLATE_BUILD_GZIP=OFF
+      - -DLIBDEFLATE_BUILD_TESTS=OFF
+      - -DCMAKE_INSTALL_LIBDIR=lib
+    sources:
+      - type: git
+        url: https://github.com/ebiggers/libdeflate.git
+        tag: v1.26
+        commit: 92e6a0db9fa848d742f9eb286c92afc60f2c3dda
+        x-checker-data:
+          type: git
+          tag-pattern: ^v([\d.]+)$
+
+  - name: jxrlib
+    buildsystem: simple
+    build-commands:
+      - make SHARED=1
+      - make install SHARED=1 DIR_INSTALL=${FLATPAK_DEST}
+    cleanup:
+      - /bin
+    sources:
+      - type: git
+        url: https://github.com/mircomir/jxrlib.git
+        tag: 1.4.4
+        commit: ddda911f389362fc33ba3babf223ce912f3cc909
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
+
+  - name: lerc
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DBUILD_SHARED_LIBS=ON
+      - -DCMAKE_INSTALL_LIBDIR=lib
+    sources:
+      - type: git
+        url: https://github.com/Esri/lerc.git
+        tag: v4.3.0
+        commit: bbd9531494ac54e49134a19acf4faab4d5cbb7cd
+        x-checker-data:
+          type: git
+          tag-pattern: ^v([\d.]+)$
+
+  # Python dependencies, generated from NegPy's uv.lock by tools/flatpak-uv-generator.py.
+  - generated/python3-modules.json
+
+  # Built against the runtime's QtCharts and the BaseApp's PyQt6.
+  - name: python3-pyqt6-charts
+    buildsystem: simple
+    build-commands:
+      - >-
+        sip-install --verbose --jobs=${FLATPAK_BUILDER_N_JOBS}
+        --target-dir="$(python3 -c 'import sysconfig; print(sysconfig.get_path("platlib", vars={"platbase": "/app"}))')"
+    sources:
+      - type: archive
+        url: https://files.pythonhosted.org/packages/c0/7f/2bd22df06ba836b6a76ec193a8085dab4a666e320326e41bccc7b2695882/pyqt6_charts-6.11.0.tar.gz
+        sha256: 1091cd919806a3ce05d2276729f79be4ecbd0a939500a8899026c3ef5769c650
+
+  - name: NegPy
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/rust-stable/bin
+      env:
+        CARGO_HOME: /run/build/NegPy/cargo
+        CARGO_NET_OFFLINE: 'true'
+    build-commands:
+      # negpy_core: NegPy's Rust extension, built with maturin (a build-only tool).
+      - pip3 install --no-index --find-links="file://${PWD}" --target="${PWD}/.maturin" maturin
+      - PATH="${PWD}/.maturin/bin:${PATH}" PYTHONPATH="${PWD}/.maturin" pip3 install --verbose
+        --exists-action=i --no-index --no-deps --find-links="file://${PWD}" --prefix=${FLATPAK_DEST}
+        ./negpy_core --no-build-isolation
+      - mkdir -p ${FLATPAK_DEST}/lib/intel-vaapi-driver ${FLATPAK_DEST}/lib/GL ${FLATPAK_DEST}/bin
+      - mkdir -p ${FLATPAK_DEST}/opt/negpy/docs
+      - cp -r desktop.py negpy icc media crosstalk gear VERSION -t ${FLATPAK_DEST}/opt/negpy/
+      - cp docs/USER_GUIDE.md ${FLATPAK_DEST}/opt/negpy/docs/
+      - install -Dm755 negpy-wrapper ${FLATPAK_DEST}/bin/negpy-wrapper
+      - install -Dm644 com.marcinz606.NegPy.desktop ${FLATPAK_DEST}/share/applications/com.marcinz606.NegPy.desktop
+      - install -Dm644 com.marcinz606.NegPy.metainfo.xml ${FLATPAK_DEST}/share/metainfo/com.marcinz606.NegPy.metainfo.xml
+      - install -Dm644 media/icons/icon.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/com.marcinz606.NegPy.svg
+    sources:
+      - type: git
+        url: https://github.com/marcinz606/NegPy.git
+        tag: 0.67.0
+        commit: 1d360ec2104f7f89ec35a640a8f13984623a62c1
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d]+\.[\d]+\.[\d]+)$
+      - cargo-sources/negpy-core/negpy-core.cargo-sources.json
+      - type: file
+        only-arches:
+          - x86_64
+        url: https://files.pythonhosted.org/packages/0a/dc/e77f490557cb5e045a75c3d18a7965425ac576235c970dfff4d903eb2c74/maturin-1.16.0-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.musllinux_1_1_x86_64.whl
+        sha256: 837db2f4d93d4899c3ac393fb3cc9eebf35b6002336e5d574f4a4fb6c49fe283
+      - type: file
+        only-arches:
+          - aarch64
+        url: https://files.pythonhosted.org/packages/45/5b/570e13ce81f103be6609c067a06c5bac08da5af0cf7ea700c9ae43419be9/maturin-1.16.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64.whl
+        sha256: e285ec9eb10243d45d10417178cb2eb76e0cbb184d0aa4378b503489fa12ee78
+      - type: dir
+        path: ./extra/

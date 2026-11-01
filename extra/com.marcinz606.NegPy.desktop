@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=NegPy
+Comment=Film Negative Editor
+Exec=negpy-wrapper
+Icon=com.marcinz606.NegPy
+StartupWMClass=NegPy
+Type=Application
+Categories=Graphics;Photography;
+Terminal=false
