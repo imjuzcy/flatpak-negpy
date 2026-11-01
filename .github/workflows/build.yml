@@ -71,8 +71,8 @@ jobs:
   deploy:
     name: Deploy and Sign Flatpak
     needs: build
-    # Restrict deployment to merges/pushes to main, tag creation, or manual triggers
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    # Only deploy from main (pushes and manual runs); other branches, tags and PRs just build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
@@ -89,12 +89,6 @@ jobs:
         with:
           name: com.marcinz606.NegPy.flatpak
           path: release
-
-      - name: Create GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: release/com.marcinz606.NegPy.flatpak
 
       - name: Checkout flatpaks repository
         uses: actions/checkout@v4
