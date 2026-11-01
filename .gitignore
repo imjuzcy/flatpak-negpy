@@ -1,0 +1,6 @@
+build/
+repo/
+release/
+cargo-sources/
+generated/
+.flatpak-builder/

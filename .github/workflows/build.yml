@@ -6,11 +6,14 @@ on:
       - main
       - dev
     tags: [ '*' ]
-    # paths-ignore:
-    #   - '.github/**'
+    paths-ignore:
+      - '.github/**'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -24,34 +27,97 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y flatpak flatpak-builder curl python3-pip
+          sudo apt-get install -y flatpak flatpak-builder pipx yq python3-packaging
+          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install -y --user --runtime runtime/org.kde.Sdk/x86_64/6.10
+
+      - name: Set up Poetry
+        run: pipx install poetry
 
       - name: Clone external repositories
         run: |
           git clone https://github.com/flatpak/flatpak-builder-tools.git /tmp/flatpak-builder-tools
-          git clone https://github.com/marcinz606/NegPy.git /tmp/NegPy
+          git clone --branch $(cat flatpak.yml | yq -r '.modules[] | objects | select(.name=="NegPy") | .sources[0].tag') https://github.com/marcinz606/NegPy.git /tmp/NegPy
 
-      - name: Prepare Python files for offline use
+      - name: Generate Python modules
+        run: python3 tools/flatpak-uv-generator.py /tmp/NegPy/uv.lock -o generated/python3-modules.json
+
+      - name: Generate cargo sources for negpy_core
         run: |
-          sed -i 's/requires = \["setuptools/requires = \["meson-python>=0.19.0","setuptools/g' /tmp/NegPy/pyproject.toml
-          pip install --user requirements-parser pyyaml
-          /tmp/flatpak-builder-tools/pip/flatpak-pip-generator --runtime org.kde.Sdk//6.10 --pyproject-file /tmp/NegPy/pyproject.toml --prefer-wheels=opencv-python-headless,rawpy,llvmlite,numba --ignore-pkg=pyqt6,pyqt6-charts-qt6,pyqt6-qt6,pyqt6-charts -o $GITHUB_WORKSPACE/pip-generated.yaml --yaml --cleanup scripts
+          mkdir -p cargo-sources/negpy-core
+          cd /tmp/flatpak-builder-tools/cargo
+          poetry install
+          poetry run python3 flatpak-cargo-generator.py \
+            /tmp/NegPy/negpy_core/Cargo.lock \
+            -o $GITHUB_WORKSPACE/cargo-sources/negpy-core/negpy-core.cargo-sources.json
 
       - name: Build Flatpak
         run: >
-          flatpak-builder --force-clean --sandbox --user
+          flatpak-builder --arch=x86_64 --force-clean --sandbox --user
           --install-deps-from=flathub --repo=./repo --install
-          build com.marcinz606.NegPy.yml
+          build flatpak.yml
 
       - name: Build Flatpak bundle
         run: |
           mkdir -p release
-          flatpak build-bundle -vv ./repo ./release/com.marcinz606.NegPy.flatpak com.marcinz606.NegPy
+          flatpak build-bundle -vv --arch=x86_64 ./repo ./release/com.marcinz606.NegPy.flatpak com.marcinz606.NegPy
 
       - name: Upload Flatpak bundle as artifact
         uses: actions/upload-artifact@v4
         with:
           name: com.marcinz606.NegPy.flatpak
           path: release/com.marcinz606.NegPy.flatpak
+
+  deploy:
+    name: Deploy and Sign Flatpak
+    needs: build
+    # Restrict deployment to merges/pushes to main, tag creation, or manual triggers
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak
+
+      - name: Download Flatpak bundle artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: com.marcinz606.NegPy.flatpak
+          path: release
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/com.marcinz606.NegPy.flatpak
+
+      - name: Checkout flatpaks repository
+        uses: actions/checkout@v4
+        with:
+          repository: imjuzcy/flatpaks
+          token: ${{ secrets.FLATPAKS_REPO_TOKEN }}
+          path: flatpaks-repo
+
+      - name: Import GPG Key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+
+      - name: Import bundle and sign repository
+        run: |
+          cd flatpaks-repo
+          flatpak build-import-bundle --gpg-sign="${{ secrets.GPG_KEY_ID }}" repo ../release/com.marcinz606.NegPy.flatpak
+          flatpak build-update-repo --generate-static-deltas --gpg-sign="${{ secrets.GPG_KEY_ID }}" repo
+
+      - name: Commit and push to flatpaks
+        run: |
+          cd flatpaks-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add repo/
+          git commit -m "Update and sign com.marcinz606.NegPy Flatpak" || echo "No changes to commit"
+          git push

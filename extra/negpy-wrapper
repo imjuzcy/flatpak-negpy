@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /app/opt/negpy
+exec python3 desktop.py -platform wayland -platformtheme kde "$@"
